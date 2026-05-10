@@ -1,5 +1,4 @@
 import { Link, Route, Routes } from 'react-router-dom'
-import './App.css'
 
 import { HomePage } from '@/pages/HomePage'
 import { TreePage } from '@/pages/TreePage'
@@ -7,29 +6,20 @@ import { TreePage } from '@/pages/TreePage'
 function App() {
   return (
     <>
-      <header
-        style={{
-          position: 'sticky',
-          top: 0,
-          zIndex: 10,
-          backdropFilter: 'blur(8px)',
-          WebkitBackdropFilter: 'blur(8px)',
-          background: 'rgba(0,0,0,0.4)',
-          borderBottom: '1px solid rgba(255,255,255,0.08)',
-        }}
-      >
-        <nav
-          style={{
-            maxWidth: 960,
-            margin: '0 auto',
-            padding: '12px 16px',
-            display: 'flex',
-            gap: 12,
-            alignItems: 'center',
-          }}
-        >
-          <Link to="/">Home</Link>
-          <Link to="/tree">Tree</Link>
+      <header className="sticky top-0 z-10 border-b border-white/8 bg-black/40 backdrop-blur-sm">
+        <nav className="mx-auto flex max-w-[960px] items-center gap-3 px-4 py-3">
+          <Link
+            to="/"
+            className="text-(--text-h) underline underline-offset-2"
+          >
+            Home
+          </Link>
+          <Link
+            to="/tree"
+            className="text-(--text-h) underline underline-offset-2"
+          >
+            Tree
+          </Link>
         </nav>
       </header>
 

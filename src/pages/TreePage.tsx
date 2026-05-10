@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { exampleInput } from '../lib/data'
 import { useParams } from 'react-router-dom'
 import SelectedPathDetail from '../components/SelectedPathDetail'
-
+import TreeSearch from '../components/TreeSearch'
 
 export function TreePage() {
 
@@ -25,22 +25,27 @@ export function TreePage() {
 	}
 
 	return (
-		<section className="py-64 flex">
+		<section className="py-24 flex flex-wrap">
+			<section className='w-full py-24'>
+				<TreeSearch
+					node={exampleInput}
+				/>
+			</section>
 			<div className="w-1/2">
-			<TreeNode
-				node={exampleInput}
-				path=""
-				expandedPaths={expandedPaths}
-				onToggle={handleToggle}
-			/>
+				<TreeNode
+					node={exampleInput}
+					path=""
+					expandedPaths={expandedPaths}
+					onToggle={handleToggle}
+				/>
 			</div>
 			<div className="w-1/2">
-			{nodePath &&
-				<SelectedPathDetail
-					node={exampleInput}
-					path={nodePath}
-				/>
-			}
+				{nodePath &&
+					<SelectedPathDetail
+						node={exampleInput}
+						path={nodePath}
+					/>
+				}
 			</div>
 		</section>
 	)

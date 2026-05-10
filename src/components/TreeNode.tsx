@@ -2,7 +2,7 @@ import { type TreeNodeData } from '../lib/types'
 import folderIcon from '../assets/folder-regular.png'
 import fileIcon from '../assets/file-regular.png'
 import angleIcon from '../assets/angle-right-solid.png'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 
 type TreeNodeProps = {
 	node: TreeNodeData,
@@ -13,9 +13,11 @@ type TreeNodeProps = {
 
 export default function TreeNode({ node, path, expandedPaths, onToggle }: TreeNodeProps) {
 
+	const location = useLocation()
+
 	if (node.type === "file") return (
 		<Link
-			to={`/tree${path}`}
+			to={`/tree${path}${location.search}`}
 			className="cursor-pointer hover:bg-current/10 w-full text-left block"
 		>
 			<img src={fileIcon} className="inline" width="20" height="20" alt="" />
@@ -29,7 +31,7 @@ export default function TreeNode({ node, path, expandedPaths, onToggle }: TreeNo
 	return (
 		<>
 			<Link
-				to={`/tree${path}`}
+				to={`/tree${path}${location.search}`}
 				onClick={() => onToggle(path)}
 				className="cursor-pointer hover:bg-current/10 w-full text-left block"
 			>

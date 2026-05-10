@@ -1,9 +1,9 @@
-import TreeNode from '../components/TreeNode'
+import TreeNode from '@/components/TreeNode'
 import { useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
-import SelectedPathDetail from '../components/SelectedPathDetail'
-import TreeSearch from '../components/TreeSearch'
-import { loadTreeFromStorage } from '../lib/storage'
+import SelectedPathDetail from '@/components/SelectedPathDetail'
+import TreeSearch from '@/components/TreeSearch'
+import { loadTreeFromStorage } from '@/lib/storage'
 
 export function TreePage() {
 

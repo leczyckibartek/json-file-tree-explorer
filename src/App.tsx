@@ -1,8 +1,8 @@
 import { Link, Route, Routes } from 'react-router-dom'
 import './App.css'
 
-import { HomePage } from './pages/HomePage'
-import { TreePage } from './pages/TreePage'
+import { HomePage } from '@/pages/HomePage'
+import { TreePage } from '@/pages/TreePage'
 
 function App() {
   return (

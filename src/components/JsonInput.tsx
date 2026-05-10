@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
-import { parseDirectoryTreeJsonText } from "../lib/validation"
-import { loadJsonText, saveJsonText } from "../lib/storage"
-import JsonFileUpload from "./JsonFileUpload"
+import JsonFileUpload from '@/components/JsonFileUpload'
+import { loadJsonText, saveJsonText } from '@/lib/storage'
+import { parseDirectoryTreeJsonText } from '@/lib/validation'
 
 export default function JsonInput() {
 

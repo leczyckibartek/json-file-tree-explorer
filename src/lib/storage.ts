@@ -1,5 +1,5 @@
-import type { FolderNode } from "./types"
-import { parseDirectoryTreeJsonText } from "./validation"
+import type { FolderNode } from '@/lib/types'
+import { parseDirectoryTreeJsonText } from '@/lib/validation'
 
 const JSON_TEXT_KEY = "json-file-tree-explorer:directory-json"
 

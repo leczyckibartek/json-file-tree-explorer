@@ -1,7 +1,7 @@
-import { type TreeNodeData } from '../lib/types'
-import folderIcon from '../assets/folder-regular.png'
-import fileIcon from '../assets/file-regular.png'
-import angleIcon from '../assets/angle-right-solid.png'
+import angleIcon from '@/assets/angle-right-solid.png'
+import fileIcon from '@/assets/file-regular.png'
+import folderIcon from '@/assets/folder-regular.png'
+import { type TreeNodeData } from '@/lib/types'
 import { Link, useLocation } from 'react-router-dom'
 
 type TreeNodeProps = {

@@ -1,6 +1,6 @@
 
 import { useSearchParams } from "react-router-dom";
-import { type TreeNodeData } from "../lib/types"
+import { type TreeNodeData } from '@/lib/types'
 import { useEffect, useState } from "react";
 
 type TreeSearchProps = {

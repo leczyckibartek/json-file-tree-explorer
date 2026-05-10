@@ -1,4 +1,4 @@
-import JsonInput from "../components/JsonInput"
+import JsonInput from '@/components/JsonInput'
 
 export function HomePage() {
 

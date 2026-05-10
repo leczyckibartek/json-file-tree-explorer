@@ -63,7 +63,7 @@ export default function TreeSearch({ node }: TreeSearchProps) {
 	const query = String(searchParams.get('s') ?? '')
 
 	return (
-		<div>
+		<div className="vscode-sidebar-search">
 			<div className="vscode-search-wrap">
 				<div className="vscode-search-input-wrap">
 					<input
@@ -87,15 +87,17 @@ export default function TreeSearch({ node }: TreeSearchProps) {
 			</div>
 
 			{foundNodes.length > 0 ? (
-				<ul className="vscode-search-results">
-					{foundNodes.map(({ node, path}) => (
-						<li key={`${path}::${node.name}`}>
-							<span className="vscode-search-hit">
-								{node.name} <code>{path || '/'}</code>
-							</span>
-						</li>
-					))}
-				</ul>
+				<div className="vscode-search-results-scroll">
+					<ul className="vscode-search-results">
+						{foundNodes.map(({ node, path}) => (
+							<li key={`${path}::${node.name}`}>
+								<span className="vscode-search-hit">
+									{node.name} <code>{path || '/'}</code>
+								</span>
+							</li>
+						))}
+					</ul>
+				</div>
 			) : query.length > 0 ? (
 				<p className="vscode-hint vscode-search-empty">No results found</p>
 			) : null}

@@ -53,6 +53,11 @@
 }
 
 /* --- Search (quick open style) --- */
+.vscode-sidebar-search {
+  flex-shrink: 0;
+  min-height: 0;
+}
+
 .vscode-search-wrap {
   padding: 6px 8px 8px;
   border-bottom: 1px solid var(--vscode-panel-border);
@@ -94,6 +99,15 @@
 .vscode-search-clear:hover {
   color: var(--vscode-editor-foreground);
   background: rgba(255, 255, 255, 0.06);
+}
+
+.vscode-search-results-scroll {
+  max-height: min(240px, 38vh);
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+  border-bottom: 1px solid var(--vscode-panel-border);
 }
 
 .vscode-search-results {

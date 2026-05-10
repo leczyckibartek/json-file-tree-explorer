@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import JsonFileUpload from '@/components/JsonFileUpload'
+import type { FolderNode } from '@/lib/types'
 import { loadJsonText, saveJsonText } from '@/lib/storage'
 import { parseDirectoryTreeJsonText } from '@/lib/validation'
 
@@ -16,8 +17,9 @@ export default function JsonInput() {
 	}, [jsonText])
 
 	const parsed = jsonText.trim() ? parseDirectoryTreeJsonText(jsonText) : null
-	const tree = typeof parsed === "object" ? parsed : null
-	const parseError = typeof parsed === "string" ? parsed : null
+	const tree: FolderNode | null =
+		parsed !== null && typeof parsed !== 'string' ? parsed : null
+	const parseError = typeof parsed === 'string' ? parsed : null
 
 	return (
 		<div>

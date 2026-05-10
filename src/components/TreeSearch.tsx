@@ -1,10 +1,10 @@
 
 import { useSearchParams } from "react-router-dom";
-import { type TreeNodeData } from '@/lib/types'
+import type { FolderNode, TreeNodeData } from '@/lib/types'
 import { useEffect, useState } from "react";
 
 type TreeSearchProps = {
-	node: TreeNodeData
+	node: FolderNode
 }
 
 type SearchResult = {
@@ -12,7 +12,7 @@ type SearchResult = {
 	path: string
 }
 
-const searchNodes = (query: string, root: TreeNodeData): SearchResult[] => {
+const searchNodes = (query: string, root: FolderNode): SearchResult[] => {
 	const q = query.trim().toLowerCase()
 	if (q.length === 0) return []
 

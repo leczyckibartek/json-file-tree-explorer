@@ -1,9 +1,9 @@
-import { type TreeNodeData } from '@/lib/types'
+import type { FolderNode, TreeNodeData } from '@/lib/types'
 import { Link } from 'react-router-dom'
 import { useLocation } from 'react-router-dom'
 
 type SelectedPathDetailProps = {
-	node: TreeNodeData
+	node: FolderNode
 	path: string
 }
 
@@ -53,11 +53,8 @@ const findNodeByRelativePath = (
 export default function SelectedPathDetail({ node, path }: SelectedPathDetailProps) {
 	const location = useLocation()
 
-	const currentNode: TreeNodeData | null = path === ''
-		? node
-		: node.type === 'folder'
-			? findNodeByRelativePath(node.children, path)
-			: null
+	const currentNode: TreeNodeData | null =
+		path === '' ? node : findNodeByRelativePath(node.children, path)
 
 	return (
 		<div className="border border-gray-600 shadow-xl rounded-md px-10 py-12 max-w-md mx-auto">

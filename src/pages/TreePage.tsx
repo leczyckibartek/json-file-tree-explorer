@@ -89,12 +89,10 @@ export function TreePage() {
 				/>
 			</div>
 			<div className="w-1/2">
-				{nodePath &&
-					<SelectedPathDetail
-						node={tree}
-						path={nodePath}
-					/>
-				}
+				<SelectedPathDetail
+					node={tree}
+					path={nodePath}
+				/>
 			</div>
 		</section>
 	)

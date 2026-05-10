@@ -53,8 +53,9 @@ const findNodeByRelativePath = (
 export default function SelectedPathDetail({ node, path }: SelectedPathDetailProps) {
 	const location = useLocation()
 
-	const currentNode =
-		node.type === 'folder'
+	const currentNode: TreeNodeData | null = path === ''
+		? node
+		: node.type === 'folder'
 			? findNodeByRelativePath(node.children, path)
 			: null
 
@@ -74,7 +75,7 @@ export default function SelectedPathDetail({ node, path }: SelectedPathDetailPro
 					</div>
 					<div>
 						<p className="text-neutral-400">Path</p>
-						<p className="mt-1">/{path}</p>
+						<p className="mt-1">{path === '' ? '/' : `/${path}`}</p>
 					</div>
 				</section>
 			) : (
@@ -103,16 +104,21 @@ export default function SelectedPathDetail({ node, path }: SelectedPathDetailPro
 					<div>
 						<p className="text-neutral-400 mb-2">List of children</p>
 						<ul className="list-disc pl-5 space-y-1">
-							{currentNode.children.map((child) => (
-								<li key={`${path}/${child.name}`}>
-									<Link
-										to={`/tree/${encodeURIComponent(`${path}/${child.name}`)}${location.search}`}
-										className="underline"
-									>
-										{child.name}
-									</Link>
-								</li>
-							))}
+							{currentNode.children.map((child) => {
+								const childPath = path === ''
+									? child.name
+									: `${path}/${child.name}`
+								return (
+									<li key={childPath}>
+										<Link
+											to={`/tree/${encodeURIComponent(childPath)}${location.search}`}
+											className="underline"
+										>
+											{child.name}
+										</Link>
+									</li>
+								)
+							})}
 						</ul>
 					</div>
 				</section>

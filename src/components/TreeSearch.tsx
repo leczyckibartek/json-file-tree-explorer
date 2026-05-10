@@ -60,35 +60,45 @@ export default function TreeSearch({ node }: TreeSearchProps) {
 		else
 			setSearchParams()
 	}
+	const query = String(searchParams.get('s') ?? '')
+
 	return (
-		<>
-			<div className="relative">
-				<input
-					type="text"
-					value={String(searchParams.get('s') ?? '')}
-					className="border-2 w-full text-2xl"
-					onChange={(e) => handleInputChange(e.currentTarget.value)}
-				/>
-				<button
-					className="absolute bg-(--bg) right-0 top-0 block px-5 h-full cursor-pointer hover:bg-gray-800 border-2"
-					onClick={() => setSearchParams()}
-				>
-					Clear
-				</button>
+		<div>
+			<div className="vscode-search-wrap">
+				<div className="vscode-search-input-wrap">
+					<input
+						type="text"
+						placeholder="Filter (search by name)"
+						aria-label="Filter explorer"
+						value={query}
+						className="vscode-search-input"
+						onChange={(e) => handleInputChange(e.currentTarget.value)}
+					/>
+					{query.length > 0 && (
+						<button
+							type="button"
+							className="vscode-search-clear"
+							onClick={() => setSearchParams()}
+						>
+							Clear
+						</button>
+					)}
+				</div>
 			</div>
 
-			{foundNodes.length > 0 ?
-				<ul>
-					{foundNodes.map(({ node, path }) => (
+			{foundNodes.length > 0 ? (
+				<ul className="vscode-search-results">
+					{foundNodes.map(({ node, path}) => (
 						<li key={`${path}::${node.name}`}>
-							{node.name} <code className="text-xs">{path}</code>
+							<span className="vscode-search-hit">
+								{node.name} <code>{path || '/'}</code>
+							</span>
 						</li>
 					))}
 				</ul>
-				: String(searchParams.get("s") ?? "").length > 0 ?
-					<p className="text-center text-2xl">No results found</p>
-					: null
-			}
-		</>
+			) : query.length > 0 ? (
+				<p className="vscode-hint vscode-search-empty">No results found</p>
+			) : null}
+		</div>
 	)
 }

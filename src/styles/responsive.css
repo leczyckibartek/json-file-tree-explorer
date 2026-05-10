@@ -1,0 +1,148 @@
+/* --- Mobile & narrow viewports --- */
+@media (max-width: 768px) {
+  .vscode-activitybar {
+    display: none;
+  }
+
+  .vscode-titlebar {
+    height: auto;
+    min-height: 44px;
+    padding: 8px 10px;
+    padding-top: max(8px, env(safe-area-inset-top, 0px));
+    padding-left: max(10px, env(safe-area-inset-left, 0px));
+    padding-right: max(10px, env(safe-area-inset-right, 0px));
+  }
+
+  .vscode-titlebar-drag {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    padding-left: 4px;
+  }
+
+  .vscode-titlebar-link {
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    padding: 0 14px;
+    font-size: 13px;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .vscode-main {
+    /* Leave room for thumb + home indicator */
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+
+  .vscode-statusbar {
+    height: auto;
+    min-height: 28px;
+    flex-wrap: wrap;
+    row-gap: 6px;
+    padding: 8px 12px;
+    padding-bottom: max(8px, env(safe-area-inset-bottom, 0px));
+    padding-left: max(12px, env(safe-area-inset-left, 0px));
+    padding-right: max(12px, env(safe-area-inset-right, 0px));
+  }
+
+  .vscode-content {
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .vscode-editor-body {
+    padding: 12px 14px 20px;
+    padding-left: max(14px, env(safe-area-inset-left, 0px));
+    padding-right: max(14px, env(safe-area-inset-right, 0px));
+  }
+
+  .vscode-editor-textarea {
+    min-height: 200px;
+    font-size: 16px;
+  }
+
+  .vscode-btn {
+    min-height: 44px;
+    padding: 10px 16px;
+    font-size: 14px;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .vscode-split {
+    flex-direction: column;
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow: visible;
+  }
+
+  .vscode-sidebar {
+    width: 100%;
+    max-width: none;
+    min-width: 0;
+    border-right: none;
+    border-bottom: 1px solid var(--vscode-panel-border);
+    flex: 0 1 auto;
+    max-height: min(46vh, 360px);
+    min-height: 0;
+  }
+
+  .vscode-sidebar-scroll {
+    min-height: 100px;
+  }
+
+  .vscode-editor-panel {
+    flex: 1 1 auto;
+    min-height: min(52vh, 560px);
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .vscode-tree-row {
+    min-height: 44px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    line-height: 1.35;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .vscode-tree-row img {
+    width: 20px;
+    height: 20px;
+  }
+
+  .vscode-search-input {
+    font-size: 16px;
+    padding: 8px 10px;
+  }
+
+  .vscode-search-clear {
+    min-width: 48px;
+    min-height: 44px;
+    padding: 0 12px;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .vscode-search-hit {
+    padding: 12px 14px;
+    min-height: 44px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 4px 8px;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .vscode-empty-state {
+    padding: 28px 16px 40px;
+    padding-left: max(16px, env(safe-area-inset-left, 0px));
+    padding-right: max(16px, env(safe-area-inset-right, 0px));
+  }
+
+  .vscode-detail {
+    max-width: none;
+    padding: 14px 16px 28px;
+    padding-left: max(16px, env(safe-area-inset-left, 0px));
+    padding-right: max(16px, env(safe-area-inset-right, 0px));
+  }
+}

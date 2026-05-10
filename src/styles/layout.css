@@ -1,0 +1,191 @@
+/* --- VS Code workbench shell --- */
+.vscode-workbench {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+  min-width: 0;
+  background: var(--vscode-editor-background);
+}
+
+.vscode-titlebar {
+  flex-shrink: 0;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  padding: 0 8px;
+  background: var(--vscode-titleBar-activeBackground);
+  color: var(--vscode-titleBar-activeForeground);
+  font-size: 12px;
+  user-select: none;
+  border-bottom: 1px solid var(--vscode-panel-border);
+}
+
+.vscode-titlebar-drag {
+  flex: 1;
+  padding-left: 8px;
+  opacity: 0.9;
+}
+
+.vscode-titlebar-nav {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.vscode-titlebar-link {
+  color: var(--vscode-titleBar-activeForeground);
+  text-decoration: none;
+  font-size: 12px;
+  padding: 4px 10px;
+  border-radius: 2px;
+}
+
+.vscode-titlebar-link:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.vscode-titlebar-link.is-active {
+  background: rgba(255, 255, 255, 0.14);
+}
+
+.vscode-main {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+  min-width: 0;
+}
+
+.vscode-activitybar {
+  flex-shrink: 0;
+  width: 48px;
+  background: var(--vscode-activityBar-background);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 4px;
+  gap: 4px;
+  border-right: 1px solid var(--vscode-panel-border);
+}
+
+.vscode-activity-item {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--vscode-activityBar-inactiveForeground);
+  text-decoration: none;
+  border-left: 2px solid transparent;
+  box-sizing: border-box;
+}
+
+.vscode-activity-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 0;
+  opacity: 0.8;
+}
+
+.vscode-activity-item:hover .vscode-activity-icon {
+  opacity: 1;
+}
+
+.vscode-activity-item.is-active {
+  color: var(--vscode-activityBar-foreground);
+  border-left-color: var(--vscode-activityBar-foreground);
+}
+
+.vscode-activity-item.is-active .vscode-activity-icon {
+  opacity: 1;
+}
+
+.vscode-content {
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  background: var(--vscode-editor-background);
+  overflow: hidden;
+}
+
+.vscode-statusbar {
+  flex-shrink: 0;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  padding: 0 12px;
+  background: var(--vscode-statusBar-background);
+  color: var(--vscode-statusBar-foreground);
+  font-size: 12px;
+  gap: 16px;
+  user-select: none;
+}
+
+.vscode-statusbar-item {
+  opacity: 0.95;
+}
+
+/* --- Explorer split (Tree page) --- */
+.vscode-split {
+  flex: 1;
+  display: flex;
+  min-height: 0;
+  min-width: 0;
+}
+
+.vscode-sidebar {
+  flex-shrink: 0;
+  width: 280px;
+  min-width: 200px;
+  max-width: 480px;
+  background: var(--vscode-sideBar-background);
+  color: var(--vscode-sideBar-foreground);
+  border-right: 1px solid var(--vscode-panel-border);
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.vscode-sidebar-header {
+  flex-shrink: 0;
+  padding: 10px 12px 6px;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--vscode-sideBarTitle-foreground);
+}
+
+.vscode-sidebar-scroll {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  padding-bottom: 8px;
+}
+
+.vscode-editor-panel {
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
+  background: var(--vscode-editor-background);
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+}
+
+.vscode-empty-state {
+  padding: 48px 32px;
+  max-width: 520px;
+}
+
+.vscode-empty-state a {
+  color: var(--vscode-textLink-foreground);
+  text-decoration: none;
+}
+
+.vscode-empty-state a:hover {
+  text-decoration: underline;
+}

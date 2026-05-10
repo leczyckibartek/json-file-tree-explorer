@@ -37,64 +37,56 @@ export function TreePage() {
 
 	if (loadResult.status === "empty") {
 		return (
-			<section className="py-24 px-4 max-w-2xl">
-				<h1 className="text-xl font-semibold text-(--text-h) mb-3">
-					No tree loaded
-				</h1>
-				<p className="text-neutral-400 mb-4">
-					Paste or upload JSON on the home page first.
-				</p>
-				<Link to="/" className="underline">
-					Go to home
-				</Link>
-			</section>
+			<div className="vscode-editor-panel">
+				<div className="vscode-empty-state">
+					<h2 className="vscode-panel-title">No tree loaded</h2>
+					<p className="vscode-paragraph-spacing">
+						Paste or upload JSON on the home page first.
+					</p>
+					<Link to="/">← Go to home</Link>
+				</div>
+			</div>
 		)
 	}
 
 	if (loadResult.status === "invalid") {
 		return (
-			<section className="py-24 px-4 max-w-2xl">
-				<h1 className="text-xl font-semibold text-(--text-h) mb-3">
-					Saved JSON is invalid
-				</h1>
-				<p className="text-neutral-400 mb-2">
-					The data in this browser could not be turned into a tree. Fix or
-					replace it on the home page.
-				</p>
-				<p role="alert" className="text-red-400 mb-4">
-					{loadResult.message}
-				</p>
-				<Link to="/" className="underline">
-					Go to home
-				</Link>
-			</section>
+			<div className="vscode-editor-panel">
+				<div className="vscode-empty-state">
+					<h2 className="vscode-panel-title">Saved JSON is invalid</h2>
+					<p className="vscode-paragraph-spacing">
+						The data in this browser could not be turned into a tree. Fix or
+						replace it on the home page.
+					</p>
+					<p role="alert" className="vscode-alert vscode-paragraph-spacing">{loadResult.message}</p>
+					<Link to="/">← Go to home</Link>
+				</div>
+			</div>
 		)
 	}
 
 	const tree = loadResult.tree
 
 	return (
-		<section className="py-24 flex flex-wrap">
-			<section className='w-full py-24'>
-				<TreeSearch
-					node={tree}
-				/>
-			</section>
-			<div className="w-1/2">
-				<TreeNode
-					node={tree}
-					path=""
-					expandedPaths={expandedPaths}
-					onToggle={handleToggle}
-				/>
-			</div>
-			<div className="w-1/2">
+		<div className="vscode-split">
+			<aside className="vscode-sidebar" aria-label="Explorer">
+				<div className="vscode-sidebar-header">Explorer</div>
+				<TreeSearch node={tree} />
+				<div className="vscode-sidebar-scroll">
+					<TreeNode
+						node={tree}
+						path=""
+						expandedPaths={expandedPaths}
+						onToggle={handleToggle}
+					/>
+				</div>
+			</aside>
+			<div className="vscode-editor-panel">
 				<SelectedPathDetail
 					node={tree}
 					path={nodePath}
 				/>
 			</div>
-		</section>
+		</div>
 	)
 }
-

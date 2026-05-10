@@ -23,20 +23,21 @@ export default function JsonInput() {
 
 	return (
 		<div>
-			<label>JSON input</label>
+			<label htmlFor="json-input" className="vscode-kv-label vscode-label-block">JSON input</label>
 			<textarea
+				id="json-input"
 				spellCheck={false}
 				value={jsonText}
 				onChange={(event) => setJsonText(event.target.value)}
-				rows={16}
-				className="w-full border-2 border-gray-300 rounded-md p-2"
+				rows={18}
+				className="vscode-editor-textarea"
 			/>
 
 			{(error ?? parseError) && (
-				<div role="alert" className="text-red-500">{error ?? parseError}</div>
+				<div role="alert" className="vscode-alert">{error ?? parseError}</div>
 			)}
 
-			<div>
+			<div className="vscode-editor-toolbar">
 				<JsonFileUpload
 					onLoaded={(text) => {
 						setError(null)
@@ -46,6 +47,7 @@ export default function JsonInput() {
 				/>
 				<button
 					type="button"
+					className="vscode-btn"
 					disabled={!tree}
 					onClick={() => navigate("/tree")}
 				>

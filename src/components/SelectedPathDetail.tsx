@@ -57,54 +57,54 @@ export default function SelectedPathDetail({ node, path }: SelectedPathDetailPro
 		path === '' ? node : findNodeByRelativePath(node.children, path)
 
 	return (
-		<div className="border border-gray-600 shadow-xl rounded-md px-10 py-12 max-w-md mx-auto">
+		<div className="vscode-detail">
 			{!currentNode ? (
-				<h1>Path not found</h1>
+				<h2 className="vscode-panel-title">Path not found</h2>
 			) : currentNode.type === 'file' ? (
-				<section className="space-y-4">
-					<div >
-						<p className="text-neutral-400">Name</p>
-						<p className="mt-1">{currentNode.name}</p>
+				<section>
+					<h2 className="vscode-panel-title">{currentNode.name}</h2>
+					<div>
+						<p className="vscode-kv-label">Name</p>
+						<p className="vscode-kv-value">{currentNode.name}</p>
 					</div>
 					<div>
-						<p className="text-neutral-400">Size</p>
-						<p className="mt-1">{formatSize(currentNode.size)}</p>
+						<p className="vscode-kv-label">Size</p>
+						<p className="vscode-kv-value">{formatSize(currentNode.size)}</p>
 					</div>
 					<div>
-						<p className="text-neutral-400">Full path from root</p>
-						<p className="mt-1 break-all">{(path === '' ? '/' : `/${path}`)}</p>
+						<p className="vscode-kv-label">Full path from root</p>
+						<p className="vscode-kv-value vscode-break-word">{(path === '' ? '/' : `/${path}`)}</p>
 					</div>
 				</section>
 			) : (
-				<section className="space-y-4">
+				<section>
+					<h2 className="vscode-panel-title">{currentNode.name}</h2>
 
-					<div className="space-y-3">
-						<div>
-							<p className="text-neutral-400">Name</p>
-							<p className="mt-1">{currentNode.name}</p>
-						</div>
-						<div>
-							<p className="text-neutral-400">Full path from root</p>
-							<p className="mt-1 break-all">{(path === '' ? '/' : `/${path}`)}</p>
-						</div>
-						<div>
-							<p className="text-neutral-400">Number of direct children</p>
-							<p className="mt-1">{currentNode.children.length}</p>
-						</div>
-
-						<div>
-							<p className="text-neutral-400">
-								Total size of all files in the subtree
-							</p>
-							<p className="mt-1">
-								{formatSize(subtreeFilesTotalBytes(currentNode))}
-							</p>
-						</div>
+					<div>
+						<p className="vscode-kv-label">Name</p>
+						<p className="vscode-kv-value">{currentNode.name}</p>
+					</div>
+					<div>
+						<p className="vscode-kv-label">Full path from root</p>
+						<p className="vscode-kv-value vscode-break-word">{(path === '' ? '/' : `/${path}`)}</p>
+					</div>
+					<div>
+						<p className="vscode-kv-label">Number of direct children</p>
+						<p className="vscode-kv-value">{currentNode.children.length}</p>
 					</div>
 
 					<div>
-						<p className="text-neutral-400 mb-2">List of children</p>
-						<ul className="list-disc pl-5 space-y-1">
+						<p className="vscode-kv-label">
+							Total size of all files in the subtree
+						</p>
+						<p className="vscode-kv-value">
+							{formatSize(subtreeFilesTotalBytes(currentNode))}
+						</p>
+					</div>
+
+					<div>
+						<p className="vscode-kv-label vscode-kv-label-list">List of children</p>
+						<ul>
 							{currentNode.children.map((child) => {
 								const childPath = path === ''
 									? child.name
@@ -113,7 +113,6 @@ export default function SelectedPathDetail({ node, path }: SelectedPathDetailPro
 									<li key={childPath}>
 										<Link
 											to={`/tree/${encodeURIComponent(childPath)}${location.search}`}
-											className="underline"
 										>
 											{child.name}
 										</Link>

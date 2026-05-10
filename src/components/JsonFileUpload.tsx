@@ -30,7 +30,11 @@ export default function JsonFileUpload({ onLoaded, onReadError }: JsonFileUpload
 				hidden
 				onChange={handleFileChange}
 			/>
-			<button type="button" onClick={() => fileInputRef.current?.click()}>
+			<button
+				type="button"
+				className="vscode-btn vscode-btn-secondary"
+				onClick={() => fileInputRef.current?.click()}
+			>
 				Upload JSON file
 			</button>
 		</>

@@ -18,16 +18,17 @@ const searchNodes = (query: string, root: TreeNodeData): SearchResult[] => {
 
 	const foundNodes: SearchResult[] = []
 
-	const recursiveSearch = (node: TreeNodeData, pathPrefix: string) => {
-		const fullPath = `${pathPrefix}/${node.name}`
-
+	const recursiveSearch = (node: TreeNodeData, currentPath: string) => {
 		if (node.name.toLowerCase().includes(q)) {
-			foundNodes.push({ node, path: fullPath })
+			foundNodes.push({ node, path: currentPath })
 		}
 
 		if (node.type === 'folder') {
 			node.children.forEach((childNode) => {
-				recursiveSearch(childNode, fullPath)
+				const childPath = currentPath === ''
+					? childNode.name
+					: `${currentPath}/${childNode.name}`
+				recursiveSearch(childNode, childPath)
 			})
 		}
 	}

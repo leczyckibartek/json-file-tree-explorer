@@ -74,8 +74,8 @@ export default function SelectedPathDetail({ node, path }: SelectedPathDetailPro
 						<p className="mt-1">{formatSize(currentNode.size)}</p>
 					</div>
 					<div>
-						<p className="text-neutral-400">Path</p>
-						<p className="mt-1">{path === '' ? '/' : `/${path}`}</p>
+						<p className="text-neutral-400">Full path from root</p>
+						<p className="mt-1 break-all">{(path === '' ? '/' : `/${path}`)}</p>
 					</div>
 				</section>
 			) : (
@@ -85,6 +85,10 @@ export default function SelectedPathDetail({ node, path }: SelectedPathDetailPro
 						<div>
 							<p className="text-neutral-400">Name</p>
 							<p className="mt-1">{currentNode.name}</p>
+						</div>
+						<div>
+							<p className="text-neutral-400">Full path from root</p>
+							<p className="mt-1 break-all">{(path === '' ? '/' : `/${path}`)}</p>
 						</div>
 						<div>
 							<p className="text-neutral-400">Number of direct children</p>

@@ -2,7 +2,6 @@ import { Link, Route, Routes } from 'react-router-dom'
 import './App.css'
 
 import { HomePage } from './pages/HomePage'
-import { TreeNodePage } from './pages/TreeNodePage'
 import { TreePage } from './pages/TreePage'
 
 function App() {
@@ -31,14 +30,13 @@ function App() {
         >
           <Link to="/">Home</Link>
           <Link to="/tree">Tree</Link>
-          <Link to="/tree/button">Tree/Button</Link>
         </nav>
       </header>
 
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/tree" element={<TreePage />} />
-        <Route path="/tree/*" element={<TreeNodePage />} />
+        <Route path="/tree/*" element={<TreePage />} />
       </Routes>
     </>
   )

@@ -1,8 +1,14 @@
-import TreeNode from "../components/TreeNode";
-import { useState } from "react";
-import { exampleInput } from "../lib/data";
+import TreeNode from '../components/TreeNode'
+import { useState } from 'react'
+import { exampleInput } from '../lib/data'
+import { useParams } from 'react-router-dom'
+import SelectedPathDetail from '../components/SelectedPathDetail'
+
 
 export function TreePage() {
+
+	const params = useParams()
+	const nodePath = params['*'] ?? ''
 	const [expandedPaths, setExpandedPaths] = useState<Set<string>>(new Set())
 
 	const handleToggle = (path: string) => {
@@ -19,12 +25,23 @@ export function TreePage() {
 	}
 
 	return (
-		<section className="py-64">
+		<section className="py-64 flex">
+			<div className="w-1/2">
 			<TreeNode
 				node={exampleInput}
 				path=""
 				expandedPaths={expandedPaths}
-				onToggle={handleToggle} />
+				onToggle={handleToggle}
+			/>
+			</div>
+			<div className="w-1/2">
+			{nodePath &&
+				<SelectedPathDetail
+					node={exampleInput}
+					path={nodePath}
+				/>
+			}
+			</div>
 		</section>
 	)
 }

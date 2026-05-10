@@ -1,7 +1,8 @@
-import { type TreeNodeData } from "../lib/types";
+import { type TreeNodeData } from '../lib/types'
 import folderIcon from '../assets/folder-regular.png'
 import fileIcon from '../assets/file-regular.png'
 import angleIcon from '../assets/angle-right-solid.png'
+import { Link } from 'react-router-dom'
 
 type TreeNodeProps = {
 	node: TreeNodeData,
@@ -13,20 +14,24 @@ type TreeNodeProps = {
 export default function TreeNode({ node, path, expandedPaths, onToggle }: TreeNodeProps) {
 
 	if (node.type === "file") return (
-		<div>
+		<Link
+			to={`/tree${path}`}
+			className="cursor-pointer hover:bg-current/10 w-full text-left block"
+		>
 			<img src={fileIcon} className="inline" width="20" height="20" alt="" />
-			{node.name}
+			<span>{node.name}</span>
 			{/* <code>{path}</code> */}
-		</div>
+		</Link>
 	)
 
 	const isExpanded = expandedPaths.has(path)
 
 	return (
 		<>
-			<button
+			<Link
+				to={`/tree${path}`}
 				onClick={() => onToggle(path)}
-				className="cursor-pointer hover:bg-current/10 w-full text-left"
+				className="cursor-pointer hover:bg-current/10 w-full text-left block"
 			>
 				<img src={angleIcon}
 					className={`inline ${isExpanded ? 'rotate-90' : ''}`}
@@ -34,7 +39,6 @@ export default function TreeNode({ node, path, expandedPaths, onToggle }: TreeNo
 					height="20"
 					alt=""
 				/>
-
 				<img
 					src={folderIcon}
 					className="inline"
@@ -42,9 +46,9 @@ export default function TreeNode({ node, path, expandedPaths, onToggle }: TreeNo
 					height="20"
 					alt=""
 				/>
-				{node.name}
+				<span>{node.name}</span>
 				{/* <code>{path}</code> */}
-			</button>
+			</Link>
 			{isExpanded &&
 				<div className="pl-7">
 					{node.children.map((child) => (

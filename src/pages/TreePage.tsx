@@ -10,7 +10,15 @@ export function TreePage() {
 	const [loadResult] = useState(() => loadTreeFromStorage())
 
 	const params = useParams()
-	const nodePath = params['*'] ?? ''
+	let nodePath = ''
+	if (params.nodePath != null && params.nodePath !== '') {
+		try {
+			nodePath = decodeURIComponent(params.nodePath)
+		}
+		catch {
+			nodePath = ''
+		}
+	}
 	const [expandedPaths, setExpandedPaths] = useState<Set<string>>(new Set())
 
 	const handleToggle = (path: string) => {

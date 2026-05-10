@@ -15,9 +15,14 @@ export default function TreeNode({ node, path, expandedPaths, onToggle }: TreeNo
 
 	const location = useLocation()
 
+	const treeLink =
+		path === ''
+			? `/tree${location.search}`
+			: `/tree/${encodeURIComponent(path.slice(1))}${location.search}`
+
 	if (node.type === "file") return (
 		<Link
-			to={`/tree${path}${location.search}`}
+			to={treeLink}
 			className="cursor-pointer hover:bg-current/10 w-full text-left block"
 		>
 			<img src={fileIcon} className="inline" width="20" height="20" alt="" />
@@ -31,7 +36,7 @@ export default function TreeNode({ node, path, expandedPaths, onToggle }: TreeNo
 	return (
 		<>
 			<Link
-				to={`/tree${path}${location.search}`}
+				to={treeLink}
 				onClick={() => onToggle(path)}
 				className="cursor-pointer hover:bg-current/10 w-full text-left block"
 			>

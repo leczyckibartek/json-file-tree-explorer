@@ -106,7 +106,7 @@ export default function SelectedPathDetail({ node, path }: SelectedPathDetailPro
 							{currentNode.children.map((child) => (
 								<li key={`${path}/${child.name}`}>
 									<Link
-										to={`/tree/${path}/${child.name}${location.search}`}
+										to={`/tree/${encodeURIComponent(`${path}/${child.name}`)}${location.search}`}
 										className="underline"
 									>
 										{child.name}

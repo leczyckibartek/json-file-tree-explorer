@@ -36,7 +36,7 @@ function App() {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/tree" element={<TreePage />} />
-        <Route path="/tree/*" element={<TreePage />} />
+        <Route path="/tree/:nodePath" element={<TreePage />} />
       </Routes>
     </>
   )

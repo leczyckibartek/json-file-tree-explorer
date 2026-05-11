@@ -1,75 +1,98 @@
-# React + TypeScript + Vite
+# JSON File Tree Explorer
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**Preview:** [json-file-tree-explorer.vercel.app](https://json-file-tree-explorer.vercel.app/)
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Requirements
 
-## React Compiler
+- **Node.js** [20.19+ or 22.12+](https://nodejs.org/) — required by **Vite 8**.
 
-The React Compiler is enabled on this template. See [this documentation](https://react.dev/learn/react-compiler) for more information.
+## Running
 
-Note: This will impact Vite dev & build performances.
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm install && npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm run build        # production build
+npm run preview      # preview the build
+npm run test         # Vitest (single run)
+npm run test:watch   # Vitest watch
+npm run lint
 ```
+
+---
+
+## Routing
+
+| Path | Behavior |
+| --- | --- |
+| `/` | Paste or upload JSON, validate, persist to `localStorage` |
+| `/tree` | Tree view + detail panel (root selection = empty path segment) |
+| `/tree/:nodePath` | Same shell; `nodePath` is `encodeURIComponent` of the path relative to the *content* root (e.g. `src%2Fcomponents%2FButton.tsx`) |
+
+Search: `?s=…` in the URL — refresh keeps the query and results.
+
+---
+
+## Architectural decisions
+
+### `expandedPaths` on `TreePage`
+
+One `Set` in the parent; `TreeNode` only reads and calls `onToggle` — single tree state, easy “expand/collapse all”, collapsing a parent does not remove children from the set (typical file-tree behavior).
+
+### Persistence
+
+JSON text in **`localStorage`** (`json-file-tree-explorer:directory-json`), reload with no backend.
+
+### Root in URL and in “full path”
+
+The JSON root is the workspace: **the first path/URL segment is not** the root’s `"name"` — e.g. `/tree` + path `/`, file `src/...` instead of `root/src/...`. The sidebar still shows the JSON root row.
+
+### VS Code–like UI
+
+The UI intentionally mirrors the **workbench** (title bar, activity bar, Explorer with tree and search, content panel, status bar) and **color tokens** in the spirit of VS Code themes. For a developer tool, that gives a fast, familiar mental model instead of designing a bespoke design system from scratch.
+
+### Other notes
+
+1. **Validation** — `parseDirectoryTreeJsonText`: `FolderNode` or `string` (error); root is a folder, unique names among siblings, no `/` in names.
+2. **`TreePage`** — one view for `/tree` and `/tree/:nodePath`; `decodeURIComponent` → details panel.
+3. **Links** — paths use `/` internally; in the URL, `encodeURIComponent` after stripping a leading `/`.
+4. **CSS** — global classes, files: `editor.css`, `explorer.css`, `layout.css`, `responsive.css` → `index.css`.
+5. **React Compiler** — `babel-plugin-react-compiler` in `vite.config.ts`; code also uses explicit **`useMemo`** when parsing on home (cheap guard against re-parse when other state changes).
+6. **Tests** — Vitest: `tests/lib/validation.test.ts`, `tests/lib/formatFileSize.test.ts`.
+
+### DRY and extractions
+
+Some small helpers could be hoisted and DRY polished. For this small scope I deliberately keep more logic “local” — for now it reads faster than through a layer of shared abstractions.
+
+---
+
+## Beyond the minimum spec
+
+- Search results = links to `/tree/…` with `?s=…`.
+- “Load example” Button — ready-made JSON.
+- Tests.
+
+---
+
+## With more time
+
+- Tree editing, JSON sync, import/export.
+- JSON editor (syntax, format, color), list virtualization, persisting expansions / path.
+- Better search (regex, sort).
+- Extract core functionality into a reusable library and expand test coverage beyond the current lib-focused suite.
+
+---
+
+## Known limitations
+
+- **Expansions** — RAM only; after F5 the tree is collapsed again (`?s=` and JSON in `localStorage` remain).
+- **`localStorage`** — ~5 MB, no cross-device sync; many tabs = last write wins; save errors (quota etc.) = **silent** `try/catch`, read may yield empty data.
+- **`/tree`** reads `localStorage` on mount — no live sync across tabs.
+- **Names** — `/` in names intentionally forbidden (URL + model).
+- **Performance** — full tree scan on search (~300 ms debounce), no DOM virtualization.
+- **Long URLs** — `nodePath` can hit limits in extreme cases.
+- **Tests** — mostly lib, no E2E / broad UI.
+- **Stack vs brief** — React **19**, Vite **8**, TS **6** `strict`, **React Compiler** (beyond brief, supported in toolchain).

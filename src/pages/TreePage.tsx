@@ -5,20 +5,23 @@ import SelectedPathDetail from '@/components/SelectedPathDetail'
 import TreeSearch from '@/components/TreeSearch'
 import { loadTreeFromStorage } from '@/lib/storage'
 
-export function TreePage() {
+function decodeNodePathParam(nodePathParam: string | undefined): string {
+	if (nodePathParam == null || nodePathParam === '') {
+		return ''
+	}
+	try {
+		return decodeURIComponent(nodePathParam)
+	}
+	catch {
+		return ''
+	}
+}
 
+export function TreePage() {
 	const [loadResult] = useState(() => loadTreeFromStorage())
 
 	const params = useParams()
-	let nodePath = ''
-	if (params.nodePath != null && params.nodePath !== '') {
-		try {
-			nodePath = decodeURIComponent(params.nodePath)
-		}
-		catch {
-			nodePath = ''
-		}
-	}
+	const nodePath = decodeNodePathParam(params.nodePath)
 	const [expandedPaths, setExpandedPaths] = useState<Set<string>>(new Set())
 
 	const handleToggle = (path: string) => {
@@ -33,7 +36,6 @@ export function TreePage() {
 			return next
 		})
 	}
-
 
 	if (loadResult.status === "empty") {
 		return (

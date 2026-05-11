@@ -1,10 +1,24 @@
+import type { ReactNode } from 'react'
 import type { FolderNode, TreeNodeData } from '@/lib/types'
-import { Link } from 'react-router-dom'
-import { useLocation } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 
 type SelectedPathDetailProps = {
 	node: FolderNode
 	path: string
+}
+
+type DetailRowProps = {
+	label: string
+	value: ReactNode
+}
+
+function DetailRow({ label, value }: DetailRowProps) {
+	return (
+		<div>
+			<p className="vscode-kv-label">{label}</p>
+			<p className="vscode-kv-value">{value}</p>
+		</div>
+	)
 }
 
 /** Formats the size of a file in a human-readable way. */
@@ -32,7 +46,8 @@ const findNodeByRelativePath = (
 	path: string
 ): TreeNodeData | null => {
 	if (!path) return null
-	const parts = path.split('/')
+	const parts = path.split('/').filter(Boolean)
+	if (parts.length === 0) return null
 	let currentLevel = siblings
 
 	for (let i = 0; i < parts.length; i++) {
@@ -55,6 +70,7 @@ export default function SelectedPathDetail({ node, path }: SelectedPathDetailPro
 
 	const currentNode: TreeNodeData | null =
 		path === '' ? node : findNodeByRelativePath(node.children, path)
+	const fullPath = path === '' ? '/' : `/${path}`
 
 	return (
 		<div className="vscode-detail">
@@ -63,44 +79,31 @@ export default function SelectedPathDetail({ node, path }: SelectedPathDetailPro
 			) : currentNode.type === 'file' ? (
 				<section>
 					<h2 className="vscode-panel-title">{currentNode.name}</h2>
-					<div>
-						<p className="vscode-kv-label">Name</p>
-						<p className="vscode-kv-value">{currentNode.name}</p>
-					</div>
-					<div>
-						<p className="vscode-kv-label">Size</p>
-						<p className="vscode-kv-value">{formatSize(currentNode.size)}</p>
-					</div>
+					<DetailRow label="Name" value={currentNode.name} />
+					<DetailRow label="Size" value={formatSize(currentNode.size)} />
 					<div>
 						<p className="vscode-kv-label">Full path from root</p>
-						<p className="vscode-kv-value vscode-break-word">{(path === '' ? '/' : `/${path}`)}</p>
+						<p className="vscode-kv-value vscode-break-word">{fullPath}</p>
 					</div>
 				</section>
 			) : (
 				<section>
 					<h2 className="vscode-panel-title">{currentNode.name}</h2>
 
-					<div>
-						<p className="vscode-kv-label">Name</p>
-						<p className="vscode-kv-value">{currentNode.name}</p>
-					</div>
+					<DetailRow label="Name" value={currentNode.name} />
 					<div>
 						<p className="vscode-kv-label">Full path from root</p>
-						<p className="vscode-kv-value vscode-break-word">{(path === '' ? '/' : `/${path}`)}</p>
+						<p className="vscode-kv-value vscode-break-word">{fullPath}</p>
 					</div>
-					<div>
-						<p className="vscode-kv-label">Number of direct children</p>
-						<p className="vscode-kv-value">{currentNode.children.length}</p>
-					</div>
+					<DetailRow
+						label="Number of direct children"
+						value={currentNode.children.length}
+					/>
 
-					<div>
-						<p className="vscode-kv-label">
-							Total size of all files in the subtree
-						</p>
-						<p className="vscode-kv-value">
-							{formatSize(subtreeFilesTotalBytes(currentNode))}
-						</p>
-					</div>
+					<DetailRow
+						label="Total size of all files in the subtree"
+						value={formatSize(subtreeFilesTotalBytes(currentNode))}
+					/>
 
 					<div>
 						<p className="vscode-kv-label vscode-kv-label-list">List of children</p>

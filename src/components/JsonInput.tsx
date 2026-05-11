@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import JsonFileUpload from '@/components/JsonFileUpload'
 import { exampleDirectoryTree } from '@/data/exampleDirectoryTree'
@@ -17,10 +17,19 @@ export default function JsonInput() {
 		saveJsonText(jsonText)
 	}, [jsonText])
 
-	const parsed = jsonText.trim() ? parseDirectoryTreeJsonText(jsonText) : null
+	const parsed = useMemo(
+		() => (jsonText.trim() ? parseDirectoryTreeJsonText(jsonText) : null),
+		[jsonText]
+	)
 	const tree: FolderNode | null =
 		parsed !== null && typeof parsed !== 'string' ? parsed : null
 	const parseError = typeof parsed === 'string' ? parsed : null
+	const visibleError = error ?? parseError
+
+	const applyJsonText = (text: string) => {
+		setError(null)
+		setJsonText(text)
+	}
 
 	return (
 		<div>
@@ -29,31 +38,25 @@ export default function JsonInput() {
 				id="json-input"
 				spellCheck={false}
 				value={jsonText}
-				onChange={(event) => setJsonText(event.target.value)}
+				onChange={(event) => applyJsonText(event.target.value)}
 				rows={18}
 				className="vscode-editor-textarea"
 			/>
 
-			{(error ?? parseError) && (
-				<div role="alert" className="vscode-alert">{error ?? parseError}</div>
+			{visibleError && (
+				<div role="alert" className="vscode-alert">{visibleError}</div>
 			)}
 
 			<div className="vscode-editor-toolbar">
 				<button
 					type="button"
 					className="vscode-btn vscode-btn-secondary"
-					onClick={() => {
-						setError(null)
-						setJsonText(JSON.stringify(exampleDirectoryTree, null, 2))
-					}}
+					onClick={() => applyJsonText(JSON.stringify(exampleDirectoryTree, null, 2))}
 				>
 					Load example
 				</button>
 				<JsonFileUpload
-					onLoaded={(text) => {
-						setError(null)
-						setJsonText(text)
-					}}
+					onLoaded={applyJsonText}
 					onReadError={setError}
 				/>
 				<button

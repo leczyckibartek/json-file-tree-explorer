@@ -67,6 +67,10 @@ The UI intentionally mirrors the **workbench** (title bar, activity bar, Explore
 
 Some small helpers could be hoisted and DRY polished. For this small scope I deliberately keep more logic “local” — for now it reads faster than through a layer of shared abstractions.
 
+### Node 20 and Vite
+
+I use **Node 20.19+ or 22.12+** (see Requirements) because this app uses **the newest Vite (8)**. **Vite 8 does not run on Node 18.** The task spec said Node 18+, but I still picked current Vite — for a new app, **keeping the stack up to date is good practice**.
+
 ---
 
 ## Beyond the minimum spec

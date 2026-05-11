@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react'
+import { formatFileSize } from '@/lib/formatFileSize'
 import type { FolderNode, TreeNodeData } from '@/lib/types'
 import { Link, useLocation } from 'react-router-dom'
 
@@ -19,17 +20,6 @@ function DetailRow({ label, value }: DetailRowProps) {
 			<p className="vscode-kv-value">{value}</p>
 		</div>
 	)
-}
-
-/** Formats the size of a file in a human-readable way. */
-const formatSize = (bytes: number): string => {
-	if (bytes < 1024) {
-		return `${bytes} B`
-	}
-	if (bytes < 1024 * 1024) {
-		return `${(bytes / 1024).toFixed(2)} KB`
-	}
-	return `${(bytes / (1024 * 1024)).toFixed(2)} MB`
 }
 
 /** Sum of sizes of all files in this node’s subtree (recursive). */
@@ -80,7 +70,7 @@ export default function SelectedPathDetail({ node, path }: SelectedPathDetailPro
 				<section>
 					<h2 className="vscode-panel-title">{currentNode.name}</h2>
 					<DetailRow label="Name" value={currentNode.name} />
-					<DetailRow label="Size" value={formatSize(currentNode.size)} />
+					<DetailRow label="Size" value={formatFileSize(currentNode.size)} />
 					<div>
 						<p className="vscode-kv-label">Full path from root</p>
 						<p className="vscode-kv-value vscode-break-word">{fullPath}</p>
@@ -102,7 +92,7 @@ export default function SelectedPathDetail({ node, path }: SelectedPathDetailPro
 
 					<DetailRow
 						label="Total size of all files in the subtree"
-						value={formatSize(subtreeFilesTotalBytes(currentNode))}
+						value={formatFileSize(subtreeFilesTotalBytes(currentNode))}
 					/>
 
 					<div>

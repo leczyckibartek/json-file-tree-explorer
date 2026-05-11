@@ -1,7 +1,13 @@
-
-import { useSearchParams } from "react-router-dom";
+import { Link, useLocation, useSearchParams } from 'react-router-dom'
 import type { FolderNode, TreeNodeData } from '@/lib/types'
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react'
+
+/** Same URL shape as `TreeNode` `treeHref` (paths here have no leading slash). */
+function searchResultHref(nodePath: string, search: string): string {
+	return nodePath === ''
+		? `/tree${search}`
+		: `/tree/${encodeURIComponent(nodePath)}${search}`
+}
 
 type TreeSearchProps = {
 	node: FolderNode
@@ -39,7 +45,8 @@ const searchNodes = (query: string, root: FolderNode): SearchResult[] => {
 }
 
 export default function TreeSearch({ node }: TreeSearchProps) {
-	const [searchParams, setSearchParams] = useSearchParams();
+	const location = useLocation()
+	const [searchParams, setSearchParams] = useSearchParams()
 
 	const [foundNodes, setFoundNodes] = useState<SearchResult[]>([]);
 
@@ -89,13 +96,21 @@ export default function TreeSearch({ node }: TreeSearchProps) {
 			{foundNodes.length > 0 ? (
 				<div className="vscode-search-results-scroll">
 					<ul className="vscode-search-results">
-						{foundNodes.map(({ node, path}) => (
-							<li key={`${path}::${node.name}`}>
-								<span className="vscode-search-hit">
-									{node.name} <code>{path || '/'}</code>
-								</span>
-							</li>
-						))}
+						{foundNodes.map(({ node: hit, path }) => {
+							const displayPath = path === '' ? '/' : `/${path}`
+							const to = searchResultHref(path, location.search)
+							return (
+								<li key={`${path}::${hit.name}`}>
+									<Link
+										to={to}
+										className="vscode-search-hit"
+										title={displayPath}
+									>
+										{hit.name} <code>{displayPath}</code>
+									</Link>
+								</li>
+							)
+						})}
 					</ul>
 				</div>
 			) : query.length > 0 ? (

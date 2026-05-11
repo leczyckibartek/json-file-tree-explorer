@@ -133,6 +133,11 @@
   background: var(--vscode-list-hoverBackground);
 }
 
+.vscode-search-hit:focus-visible {
+  outline: 1px solid var(--vscode-focusBorder, #3794ff);
+  outline-offset: -1px;
+}
+
 .vscode-search-hit code {
   background: transparent;
   padding: 0;

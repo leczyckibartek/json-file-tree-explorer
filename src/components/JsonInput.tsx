@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import JsonFileUpload from '@/components/JsonFileUpload'
+import { exampleDirectoryTree } from '@/data/exampleDirectoryTree'
 import type { FolderNode } from '@/lib/types'
 import { loadJsonText, saveJsonText } from '@/lib/storage'
 import { parseDirectoryTreeJsonText } from '@/lib/validation'
@@ -38,6 +39,16 @@ export default function JsonInput() {
 			)}
 
 			<div className="vscode-editor-toolbar">
+				<button
+					type="button"
+					className="vscode-btn vscode-btn-secondary"
+					onClick={() => {
+						setError(null)
+						setJsonText(JSON.stringify(exampleDirectoryTree, null, 2))
+					}}
+				>
+					Load example
+				</button>
 				<JsonFileUpload
 					onLoaded={(text) => {
 						setError(null)
